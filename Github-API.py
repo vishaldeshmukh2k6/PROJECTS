@@ -29,7 +29,7 @@ res = requests.get(api).json()
 print(f"Hello, {res.get("name")}")
 
 
-What_you_get = int(input("What do you want from me?\n 1 is Account Detail\n 2 is Repo list \n 3 is Followers \n 4 is Follwings \n Enter any one :- "))
+What_you_get = int(input("What do you want from me?\n Enter 1 is Account Detail\n Enter 2 is All Repo name  \n Enter 3 is All Followers Name  \n Enter 4 is All Follwings Name  \n Enter any one :- "))
 
 if What_you_get == 1:
     print(f"Name :- {res.get("name")}")   # Name
@@ -37,11 +37,36 @@ if What_you_get == 1:
     print(f"Bio :- {res.get("bio")}")  # bio
     print(f"Location :- {res.get("location")}")   # location
 
+
 if What_you_get == 2:
-    print(f"Repo list :- {res.get("public_repos")}")
+    api2 = api + "/repos"
+    new1 = requests.get(api2,  params = {"page" : 1, "per_page": 100}).json()
+
+    i = 1
+
+    for repos in new1:
+        print(f"{i} Repositories :- {repos.get("name")}")
+        i+= 1
 
 if What_you_get == 3:
-    print(f"Followers :- {res.get("followers")}")  # Followers
+    api1 = api + "/followers"
+    new2 = requests.get(api1, params = {"page" : 1, "per_page": 100}).json()
+    
+    i = 1
+    for user in new2:
+        print(f"{i} Followers :- {user.get("login")}")
+        i += 1
+
 
 if What_you_get == 4:
-    print(f"Following :- {res.get("following")}")  # Following
+
+    api3 = api + "/following"
+    new3 = requests.get(api3, params = {"page" : 1, "per_page": 100}).json()
+
+    i = 1
+
+    for Foll in new3:
+        print(f"{i} following :- {Foll.get("login")}")
+        i += 1
+
+
